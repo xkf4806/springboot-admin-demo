@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: admin-server
+  profiles:
+    active: insecure
+server:
+  port: 8080
+eureka:
+  instance:
+    lease-renewal-interval-in-seconds: 10
+    health-check-url-path: /actuator/health
+  client:
+    registry-fetch-interval-seconds: 5
+    service-url: ${EUREKA_SERVICE_URL:http://localhost:8761}/eureka
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+  endpoint:
+    health:
+      show-details: always
+---
+spring:
+  profiles:
+    active: secure
+  security:
+    user:
+      name: admin
+      password: admin
+eureka:
+  instance:
+    metadata-map:
+      user.name: admin
+      user.password: admin
+server:
+  port: 8081
+---
